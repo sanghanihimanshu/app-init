@@ -1,6 +1,6 @@
 {
-  "name": "app-init",
-  "version": "1.0.0",
+  "name": "@edgex0255/init",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "@appInit": "./index.js"
+    "app-init": "index.js"
 },
 "publishConfig": {
   "access": "public"
