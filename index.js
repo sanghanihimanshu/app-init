@@ -32,6 +32,27 @@ async function main() {
           options: packageManager,
           initialValue: packageManager[0],
         }),
+      check: async ({ results }) => {
+        try {
+          p.log.step("Checking for " + results.PackageManager);
+          execSync(results.PackageManager + " -v", (error) => {
+            if (error) {
+              p.log.error(error.message);
+              return;
+            }
+          });
+          return p.log.success(results.PackageManager + " already installed");
+        } catch (e) {
+          p.log.step("Installing " + results.PackageManager);
+          execSync("npm i -g " + results.PackageManager, (error) => {
+            if (error) {
+              p.log.error(error.message);
+              return;
+            }
+          });
+          return p.log.success("Installation complete");
+        }
+      },
       Language: () => {
         return p.select({
           message: `Select your Language`,
@@ -64,7 +85,7 @@ async function main() {
     return onCancel();
   }
   try {
-    execSync(fullcommand+"&&"+"cd " + appName+"&&"+pm+" install");
+    execSync(fullcommand + "&&" + "cd " + appName + "&&" + pm + " install");
     p.log.success(`app created! ${color.underline(color.cyan(appName))}`);
     return p.outro("let`s start race 🚀");
   } catch (error) {
